@@ -128,6 +128,7 @@ This is especially critical for background commands where the working directory 
 | **Utility tools** | redub, addmusic, notebooklm_brand, locate_watermark | Quick transformations on existing videos |
 | **Cloud GPU** | image_edit, upscale, dewatermark, sadtalker, qwen3_tts, music_gen, flux2 | AI processing via RunPod or Modal (`--cloud runpod\|modal`) |
 | **Publishing** | youtube_upload | Upload a finished render to YouTube (use `/publish` for the guided workflow) |
+| **Research** | youtube_niche_finder | Find demand/supply gaps by keyword, or scan a competitor channel for weaknesses |
 
 Utility tools work on any video file without requiring a project structure.
 
@@ -382,6 +383,28 @@ python3 tools/youtube_upload.py --video out/video.mp4 --title "Test" --dry-run -
   channel + account) generally publish public/scheduled fine without the audit. The tool reports
   the actual returned privacy. "Testing"-mode refresh tokens expire after ~7 days (re-run `--auth`).
 - Cached tokens live in `_internal/.youtube/` (gitignored — they grant channel-upload access).
+
+### YouTube Niche & Competitor Research
+
+Before committing to a video topic, use `tools/youtube_niche_finder.py` to check whether a
+theme is a genuine demand/supply gap and to scan competitor channels for weaknesses.
+
+```bash
+# Demand/supply signal for one or more Japanese-language themes
+python3 tools/youtube_niche_finder.py gap --keyword "AI 動画編集" --keyword "Remotion 使い方" \
+    --lang ja --region JP --json-out
+
+# Competitor weakness scan (upload cadence, view trend, engagement flags)
+python3 tools/youtube_niche_finder.py channel --handle @somechannel --json-out
+```
+
+**Setup is a plain API key** (read-only lookups, not the OAuth client above) — see
+`docs/youtube-niche-finder.md` and `YOUTUBE_API_KEY` in `.env`. Key realities:
+- `gap` mode costs ~100 quota units per `--keyword` (`search.list`); `channel` mode avoids
+  `search.list` entirely and costs only a few units per scan.
+- `search.list` only samples the top results for the chosen `--order` — treat the numbers as
+  directional signal, not a census. The strongest gap signal is high `viewsPerChannel` + low
+  `uniqueChannelCount` + stale `avgVideoAgeDays` together, not any single metric alone.
 
 ## Video Production Workflow
 

@@ -695,6 +695,43 @@
       "documentation": "docs/youtube-upload.md",
       "created": "2026-06-09",
       "updated": "2026-06-09"
+    },
+    "youtube_niche_finder": {
+      "path": "tools/youtube_niche_finder.py",
+      "description": "Research YouTube niche demand/supply gaps by keyword (views, unique channels, staleness) and scan a competitor channel for weaknesses (upload cadence, view trend, engagement) via the Data API v3",
+      "usage": "python3 tools/youtube_niche_finder.py gap --keyword \"AI 動画編集\" --lang ja --region JP --json-out",
+      "status": "beta",
+      "category": "research",
+      "backend": "YouTube Data API v3 (search.list / videos.list / channels.list / playlistItems.list, plain API key)",
+      "requires": "YOUTUBE_API_KEY (read-only API key, not the OAuth client used by youtube_upload.py)",
+      "options": {
+        "modes": [
+          "gap",
+          "channel"
+        ],
+        "gap": [
+          "--keyword (repeatable)",
+          "--lang",
+          "--region",
+          "--order",
+          "--max-results",
+          "--verbose"
+        ],
+        "channel": [
+          "--channel-id",
+          "--handle",
+          "--channel-url",
+          "--max-videos"
+        ],
+        "jsonOut": true
+      },
+      "envVars": [
+        "YOUTUBE_API_KEY"
+      ],
+      "note": "gap mode costs ~100 quota units per --keyword (search.list); channel mode avoids search.list and costs only a few units per scan. Default quota is 10,000 units/day.",
+      "documentation": "docs/youtube-niche-finder.md",
+      "created": "2026-07-01",
+      "updated": "2026-07-01"
     }
   },
   "optionalComponents": {
