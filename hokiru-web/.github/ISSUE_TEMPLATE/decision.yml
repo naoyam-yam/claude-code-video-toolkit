@@ -1,0 +1,46 @@
+name: Decision
+description: 人間の判断が必要な項目（needs-decisionラベルが自動で付く）
+labels: ["needs-decision"]
+body:
+  - type: textarea
+    id: question
+    attributes:
+      label: 判断したいこと
+    validations:
+      required: true
+  - type: textarea
+    id: option-a
+    attributes:
+      label: 選択肢A
+    validations:
+      required: true
+  - type: textarea
+    id: option-b
+    attributes:
+      label: 選択肢B
+    validations:
+      required: true
+  - type: textarea
+    id: recommendation
+    attributes:
+      label: 推奨案
+    validations:
+      required: true
+  - type: textarea
+    id: reason
+    attributes:
+      label: 推奨理由
+    validations:
+      required: true
+  - type: textarea
+    id: unblocked
+    attributes:
+      label: 未回答でも進められる作業
+    validations:
+      required: true
+  - type: textarea
+    id: default
+    attributes:
+      label: 回答がない場合のデフォルト
+    validations:
+      required: true

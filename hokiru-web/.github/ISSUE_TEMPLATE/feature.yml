@@ -1,0 +1,23 @@
+name: Feature
+description: 新機能・改善の提案
+labels: ["ai-runnable"]
+body:
+  - type: textarea
+    id: purpose
+    attributes:
+      label: 目的
+      description: この機能が解決する問題
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: スコープ
+      description: 入れるもの / 入れないもの
+    validations:
+      required: true
+  - type: textarea
+    id: dod
+    attributes:
+      label: 関連するDoD項目
+      description: docs/operations/dod.md の該当行

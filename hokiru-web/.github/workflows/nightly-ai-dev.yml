@@ -1,0 +1,59 @@
+# PORTABLE TEMPLATE — see ci.yml header comment. Move to repo-root .github/ to activate.
+#
+# Runs the nightly autonomous dev loop described in
+# docs/operations/ai-nightly-run.md. If ANTHROPIC_API_KEY is not set, falls
+# back to a degraded mode that only posts the current DoD status — it never
+# fails the run just because secrets are missing (needs-human-auth, not blocked).
+name: Nightly AI Dev Run
+
+on:
+  schedule:
+    # Weekdays, 02:00 UTC (~11:00 JST) — see docs/operations/token-budget.md for cadence rules.
+    - cron: "0 2 * * 1-5"
+  workflow_dispatch: {}
+
+jobs:
+  nightly-run:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: hokiru-web
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+          cache-dependency-path: hokiru-web/package-lock.json
+
+      - run: npm install
+
+      - name: Collect DoD status
+        run: npm run dod:status -- --json | tee dod-status.json
+
+      - name: Degraded mode (no ANTHROPIC_API_KEY)
+        if: ${{ !secrets.ANTHROPIC_API_KEY }}
+        run: |
+          echo "::warning::ANTHROPIC_API_KEY not set — running in degraded mode (needs-human-auth)."
+          echo "See docs/operations/ai-nightly-run.md for the manual fallback and Phase 0 setup steps."
+
+      - name: Run Claude Code nightly task
+        if: ${{ secrets.ANTHROPIC_API_KEY }}
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          echo "Wire up your Claude Code Action (or equivalent CLI invocation) here."
+          echo "Contract: read dod-status.json, pick pendingRunnable[0], implement, test,"
+          echo "screenshot, open a PR using pull_request_template.md. See ai-nightly-run.md."
+
+      - name: Notion sync
+        if: always()
+        run: npm run notion:draft
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: nightly-run-notion-draft
+          path: hokiru-web/docs/operations/notion-update-draft.md
+          retention-days: 30
