@@ -1,0 +1,36 @@
+- name: needs-decision
+  color: "d73a4a"
+  description: 人間の判断待ち。回答があるまで関連タスクのみ停止する。
+- name: ai-runnable
+  color: "0e8a16"
+  description: 判断不要でAIが独断で実装を進められるタスク。
+- name: dod
+  color: "5319e7"
+  description: docs/operations/dod.md の項目に対応するタスク。
+- name: rights
+  color: "b60205"
+  description: rightsStatus / supervisionStatus / 権利ゲートに関わるタスク。
+- name: ui
+  color: "1d76db"
+  description: UI・デザインに関わるタスク。
+- name: test
+  color: "fbca04"
+  description: テストの追加・修正。
+- name: automation
+  color: "0052cc"
+  description: GitHub Actions・夜間ラン・スクリプトに関わるタスク。
+- name: notion
+  color: "c5def5"
+  description: Notion更新に関わるタスク。
+- name: blocked
+  color: "e4e669"
+  description: 判断待ちまたは外部要因により進められないタスク。
+- name: ready-to-merge
+  color: "0e8a16"
+  description: テスト・スクリーンショット確認済みでマージ待ちのPR。
+- name: nightly-run
+  color: "5319e7"
+  description: 夜間自動開発ランが生成したIssue/PR。
+- name: question-quality
+  color: "f9d0c4"
+  description: 問題データの品質・監修に関わるタスク。

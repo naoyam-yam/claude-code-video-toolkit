@@ -1,0 +1,33 @@
+name: DoD Item
+description: docs/operations/dod.md の未完了項目を個別Issue化する
+labels: ["ai-runnable", "dod"]
+body:
+  - type: dropdown
+    id: category
+    attributes:
+      label: カテゴリ
+      options:
+        - Product
+        - UI
+        - Learning Experience
+        - Question Quality
+        - Rights
+        - Technical
+        - Test
+        - Accessibility
+        - Performance
+        - Security
+        - Operations
+        - Release
+    validations:
+      required: true
+  - type: textarea
+    id: item
+    attributes:
+      label: DoD項目（dod.mdの該当行をそのまま貼る）
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: 完了確認方法

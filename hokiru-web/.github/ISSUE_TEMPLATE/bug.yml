@@ -1,0 +1,22 @@
+name: Bug
+description: 不具合報告
+labels: ["ai-runnable", "bug"]
+body:
+  - type: textarea
+    id: symptom
+    attributes:
+      label: 症状
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: 再現手順
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: 期待される挙動
+    validations:
+      required: true
