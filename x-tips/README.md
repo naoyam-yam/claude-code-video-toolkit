@@ -23,6 +23,7 @@ Nothing here posts to X on its own. What it does do:
 | `WIKI.md` | The canonical, categorized list of Claude Code tips. This is the "wiki" — durable, fact-checked, one entry per tip. |
 | `QUEUE.md` | Draft X posts derived from `WIKI.md` entries, ready to copy-paste. Mark each `posted` once it goes out. |
 | `SOURCES.md` | Attribution log — which tip came from which tweet/post, so credit isn't lost. |
+| `MOBILE-CAPTURE.md` | Optional, isolated add-on: share a post from the X app on your phone straight into this pipeline via a GitHub Issue + Trigger. Uses its own minimally-scoped token — see that file's security section before setting it up. |
 
 ## Workflow
 

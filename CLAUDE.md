@@ -680,7 +680,9 @@ API access — it only prepares content for manual posting.
 Paste a tip (tweet text/URL or a description) and the `x-tips-curator`
 skill fact-checks it, writes a `x-tips/WIKI.md` entry, drafts a post in
 `x-tips/QUEUE.md`, and logs the source in `x-tips/SOURCES.md`. See
-`x-tips/README.md` for the full workflow and limits.
+`x-tips/README.md` for the full workflow and limits. For a hands-free
+"share a post from the X app on your phone" capture flow (isolated,
+minimally-scoped credentials), see `x-tips/MOBILE-CAPTURE.md`.
 
 ## Documentation
 

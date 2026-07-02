@@ -23,6 +23,12 @@ The user will give you one of:
 - Pasted tweet/post text (possibly with a URL)
 - A URL to an X post (if you can't fetch it, ask the user to paste the text)
 - A plain-language description of a trick they saw
+- A GitHub Issue body created from the `x-tip` issue form (see
+  `x-tips/MOBILE-CAPTURE.md`) — it has `source_url`, `tip_text`, and an
+  optional `note` field; treat `tip_text` as the raw tip and `source_url`
+  as the source for `SOURCES.md`. If invoked this way, open a PR with the
+  changes and comment the PR link back on the originating issue instead
+  of just showing a diff summary.
 
 ## Steps
 
