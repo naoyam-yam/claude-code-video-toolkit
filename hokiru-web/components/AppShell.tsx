@@ -30,7 +30,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
               <li key={tab.href} className="flex-1">
                 <Link
                   href={tab.href}
-                  className={`block px-2 py-3 text-center text-xs ${
+                  className={`flex min-h-[44px] items-center justify-center px-2 text-center text-xs ${
                     active ? "font-semibold text-accent" : "text-muted"
                   }`}
                 >

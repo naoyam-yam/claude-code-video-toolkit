@@ -68,7 +68,7 @@ GitHub Issue(`needs-decision`ラベル)側で回答を待つ。
 
 ## Performance DoD
 
-- [ ] Lighthouse Performanceスコア90以上（モバイル）（Lighthouse CI未導入。下記LCP直接計測で部分的に代替しているが、Performance合成スコアそのものは未計測 — Lighthouse CIのセットアップが次のOperations作業候補）
+- [x] Lighthouse Performanceスコア90以上（モバイル）（`npx lighthouse`をローカルで実行し実測（2026-07-02）: home/practice/review/analysis/settings 全ページでPerformance 99、Accessibility 100、Best Practices 96、SEO 100。実測過程でTopicBadgeのコントラスト比不足(4.39<4.5)とボトムナビのタップ領域不足(17px<24px)という実在のバグを発見・修正済み。CI用のポータブルworkflowテンプレートは`lighthouse.yml`参照）
 - [x] 初回表示（LCP）が2.5秒以内（`tests/e2e/performance.spec.ts`でPerformanceObserverによるLCP実測。home/practice両方で2.5秒未満を確認）
 - [x] JSバンドルサイズがpracticeページで200KB(gzip)以内（`npm run build`実測: practiceページ First Load JS 107 kB、gzip換算）
 

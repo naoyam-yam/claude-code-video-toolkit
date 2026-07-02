@@ -1,0 +1,73 @@
+# PORTABLE TEMPLATE — see ci.yml header comment. Move to repo-root .github/ to activate.
+#
+# Measures Lighthouse scores against the production build on every PR (see
+# docs/operations/dod.md Performance DoD). Uses the checked-out Chromium
+# from Playwright's install step rather than downloading a second browser.
+name: Lighthouse
+
+on:
+  pull_request:
+    paths:
+      - "hokiru-web/**"
+  workflow_dispatch: {}
+
+jobs:
+  lighthouse:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: hokiru-web
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+          cache-dependency-path: hokiru-web/package-lock.json
+
+      - run: npm install
+      - run: npx playwright install --with-deps chromium
+      - run: npm run build
+
+      - name: Start production server
+        run: npm run start &
+
+      - name: Wait for server
+        run: npx wait-on http://localhost:3000
+
+      - name: Run Lighthouse across all screens
+        env:
+          CHROME_PATH: /root/.cache/ms-playwright/chromium-*/chrome-linux/chrome
+        run: |
+          for path in "" "practice" "review" "analysis" "settings"; do
+            name="${path:-home}"
+            npx lighthouse "http://localhost:3000/${path}" \
+              --output=json --output-path="lighthouse-${name}.json" \
+              --chrome-flags="--headless=new --no-sandbox --disable-gpu" \
+              --only-categories=performance,accessibility,best-practices,seo \
+              --quiet
+          done
+
+      - name: Fail if Performance or Accessibility drop below 90
+        run: |
+          node -e '
+            const fs = require("fs");
+            const files = fs.readdirSync(".").filter(f => f.startsWith("lighthouse-") && f.endsWith(".json"));
+            let failed = false;
+            for (const f of files) {
+              const data = JSON.parse(fs.readFileSync(f, "utf-8"));
+              const perf = Math.round(data.categories.performance.score * 100);
+              const a11y = Math.round(data.categories.accessibility.score * 100);
+              console.log(`${f}: performance=${perf} accessibility=${a11y}`);
+              if (perf < 90 || a11y < 90) failed = true;
+            }
+            if (failed) process.exit(1);
+          '
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: lighthouse-reports
+          path: hokiru-web/lighthouse-*.json
+          retention-days: 14
