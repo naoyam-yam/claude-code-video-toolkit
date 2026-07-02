@@ -36,7 +36,7 @@ GitHub Issue(`needs-decision`ラベル)側で回答を待つ。
 
 ## Question Quality DoD
 
-- [ ] サンプル問題6問すべてに法令根拠（legalBasis/legalReference）が入っている（公開候補5問は充足。internal_reference_only 1問は意図的に"N/A" — 判定基準を次回精査）
+- [x] サンプル問題6問すべてに法令根拠（legalBasis/legalReference）が入っている（`tests/unit/seed-data-quality.test.ts`で機械チェック化。公開候補5問すべて充足を確認。internal_reference_only 1問は意図的な"N/A"のため対象外と明記）
 - [ ] サンプル問題6問のうち最低1問が一級建築士本人により`supervised`へ遷移している (needs-decision: 監修者本人の作業)
 - [ ] 監修済みフラグ100%（法令の誤りゼロ）— 公開対象問題すべてに適用
 
@@ -68,9 +68,9 @@ GitHub Issue(`needs-decision`ラベル)側で回答を待つ。
 
 ## Performance DoD
 
-- [ ] Lighthouse Performanceスコア90以上（モバイル）
-- [ ] 初回表示（LCP）が2.5秒以内
-- [ ] JSバンドルサイズがpracticeページで200KB(gzip)以内
+- [ ] Lighthouse Performanceスコア90以上（モバイル）（Lighthouse CI未導入。下記LCP直接計測で部分的に代替しているが、Performance合成スコアそのものは未計測 — Lighthouse CIのセットアップが次のOperations作業候補）
+- [x] 初回表示（LCP）が2.5秒以内（`tests/e2e/performance.spec.ts`でPerformanceObserverによるLCP実測。home/practice両方で2.5秒未満を確認）
+- [x] JSバンドルサイズがpracticeページで200KB(gzip)以内（`npm run build`実測: practiceページ First Load JS 107 kB、gzip換算）
 
 ## Security DoD
 
@@ -80,9 +80,9 @@ GitHub Issue(`needs-decision`ラベル)側で回答を待つ。
 
 ## Operations DoD
 
-- [ ] `nightly-ai-dev.yml`がsecrets未設定でもエラー終了せずneeds-human-authを記録する
-- [ ] `collect-dod-status.ts`が正しくpendingRunnable/blockedOnDecisionを分類する
-- [ ] PRテンプレートの全セクションが夜間ランで自動記入される
+- [x] `nightly-ai-dev.yml`がsecrets未設定でもエラー終了せずneeds-human-authを記録する（コードレビュー済み: 全ステップが`if:`条件付きまたは常に成功するコマンドのみで構成され、`ANTHROPIC_API_KEY`未設定時は`::warning::`を出すだけで正常終了する）
+- [x] `collect-dod-status.ts`が正しくpendingRunnable/blockedOnDecisionを分類する（`tests/unit/collect-dod-status.test.ts`で`parseDod()`をユニットテスト化。needs-decision/判断待ちマーカーの検出、大文字小文字の`[x]`/`[X]`両対応を検証済み）
+- [ ] PRテンプレートの全セクションが夜間ランで自動記入される（`nightly-ai-dev.yml`のAI起動ステップは現状プレースホルダのみで未実装 — 実際のClaude Code Action統合が前提。次のOperations作業候補）
 
 ## Release DoD
 

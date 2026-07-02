@@ -9,7 +9,7 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 
-interface DodItem {
+export interface DodItem {
   category: string;
   text: string;
   done: boolean;
@@ -18,7 +18,7 @@ interface DodItem {
 
 const DOD_PATH = join(__dirname, "..", "docs", "operations", "dod.md");
 
-function parseDod(markdown: string): DodItem[] {
+export function parseDod(markdown: string): DodItem[] {
   const items: DodItem[] = [];
   let category = "uncategorized";
 
@@ -78,4 +78,6 @@ function main() {
   }
 }
 
-main();
+if (process.argv[1]?.endsWith("collect-dod-status.ts")) {
+  main();
+}
