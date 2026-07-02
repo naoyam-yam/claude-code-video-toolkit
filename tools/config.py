@@ -72,6 +72,21 @@ def get_ideogram_api_key() -> str | None:
     return os.getenv("IDEOGRAM_API_KEY")
 
 
+def get_youtube_api_key() -> str | None:
+    """Get the YouTube Data API v3 key used for read-only lookups (search/videos/channels).
+
+    This is a plain API key, NOT the OAuth client used by youtube_upload.py — no browser
+    consent or channel access required, just "enable the API + create an API key" in
+    Google Cloud Console. See docs/youtube-niche-finder.md.
+    """
+    from dotenv import load_dotenv
+    load_dotenv()
+    key = os.getenv("YOUTUBE_API_KEY")
+    if key and key != "your_api_key_here":
+        return key
+    return None
+
+
 def get_youtube_client_secrets_file() -> str | None:
     """Path to the OAuth 2.0 'Desktop app' client_secret JSON used for YouTube uploads.
 
