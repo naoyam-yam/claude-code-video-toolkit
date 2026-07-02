@@ -666,6 +666,22 @@ Consider how visual intensity builds across scenes:
 
 Keep these separate. Don't mix toolkit improvements with video production.
 
+## X Tips Account (Claude Code Tips Curation)
+
+A separate, unrelated system lives in `x-tips/` for curating viral
+"Claude Code, do this" tips seen on X (Twitter) into a durable wiki and
+a draft post queue. It has no connection to video production and no X
+API access — it only prepares content for manual posting.
+
+```
+/x-tips
+```
+
+Paste a tip (tweet text/URL or a description) and the `x-tips-curator`
+skill fact-checks it, writes a `x-tips/WIKI.md` entry, drafts a post in
+`x-tips/QUEUE.md`, and logs the source in `x-tips/SOURCES.md`. See
+`x-tips/README.md` for the full workflow and limits.
+
 ## Documentation
 
 - `docs/getting-started.md` - First video walkthrough
