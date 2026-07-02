@@ -12,12 +12,17 @@ GitHub Issue(`needs-decision`ラベル)側で回答を待つ。
 
 - [x] ホーム→復習の1タップ導線が全画面幅で機能する（`tests/e2e/home.spec.ts`で検証済み）
 - [x] 演習→採点→復習→進捗保存が通しで動く（`tests/e2e/practice.spec.ts`・`review.spec.ts`で検証済み）
-- [ ] 設定でexamDate/pace/defaultIntervalDaysが保存・反映される（実装済み・e2e未カバー）
-- [ ] データリセットが学習ログ・復習状態・設定のすべてを消去する（実装済み・e2e未カバー）
+- [x] 設定でexamDate/pace/defaultIntervalDaysが保存・反映される（`tests/e2e/settings.spec.ts`で検証済み）
+- [x] データリセットが学習ログ・復習状態・設定のすべてを消去する（`tests/e2e/settings.spec.ts`で検証済み）
 
 ## UI DoD
 
-- [ ] ホーム画面の主要情報が3つ以内に収まっている
+> この4項目は主観判定であり、v1.0の設計方針（「感覚的な『見た目の判断』を人間に求めるのは、
+> PRに自動添付されるスクリーンショットを見る瞬間だけに限定する」）に従い、**AIは自己判定で
+> チェックを付けない**。PRのスクリーンショットを見た人間がチェックする。AIは実装・改善は行うが、
+> 完了判定はしない。
+
+- [ ] ホーム画面の主要情報が3つ以内に収まっている（事前決定メモの主表示3項目=試験までの日数/今日の復習数/次にやるべき1件、苦手論点・継続日数は補助表示として視覚的に弱める実装済み）
 - [ ] 各画面の主ボタンが1つに絞られている
 - [ ] 色数が最小限（accent/muted/ink/paperの4色以内）に保たれている
 - [ ] スマホ実機幅（375px〜430px）で表示崩れゼロ
@@ -37,7 +42,7 @@ GitHub Issue(`needs-decision`ラベル)側で回答を待つ。
 
 ## Rights DoD
 
-- [ ] `canPublishQuestion()`のテストが全パターン(4rightsStatus × 3supervisionStatus)をカバーしている（現状9ケースで主要分岐のみカバー。`in_review`状態の組み合わせが未網羅）
+- [x] `canPublishQuestion()`のテストが全パターン(4rightsStatus × 3supervisionStatus)をカバーしている（`tests/unit/rights.test.ts`に12ケースのフルマトリクステストを追加、全green）
 - [x] `data/internal/`配下のデータが`app/`・`components/`・`data/seed/`から一切importされていない（grep検証済み、importなし）
 - [x] R07法規120問が`data/internal/`または外部保管のみに存在し、リポジトリ本体のpublic pathに含まれない（grep検証済み、リポジトリ内にR07関連データ自体が存在しない）
 - [x] 本番seedスクリプト(`scripts/seed-supabase.ts`)が`filterPublishable()`を経由しないパスを持たない（コードレビュー済み、唯一のDB書き込みパスがfilterPublishable経由）
@@ -57,9 +62,9 @@ GitHub Issue(`needs-decision`ラベル)側で回答を待つ。
 
 ## Accessibility DoD
 
-- [ ] 主要ボタンにaria-labelまたは十分なテキストラベルがある
-- [ ] 選択肢ボタンがキーボード操作(Tab/Enter)で選べる
-- [ ] コントラスト比がWCAG AA基準を満たす（ink #1a1a1a on paper #fafaf9で確認済み）
+- [x] 主要ボタンにaria-labelまたは十分なテキストラベルがある（grep監査済み: `components/`・`app/`内の全button/Linkが可視テキストラベルを持つ。アイコンのみのボタンなし）
+- [x] 選択肢ボタンがキーボード操作(Tab/Enter)で選べる（`tests/e2e/accessibility.spec.ts`で検証済み）
+- [x] コントラスト比がWCAG AA基準を満たす（ink #1a1a1a on paper #fafaf9で確認済み。相対輝度から算出したコントラスト比 ≈16.7:1、AA基準4.5:1・AAA基準7:1を両方上回る）
 
 ## Performance DoD
 

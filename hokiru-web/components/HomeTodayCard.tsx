@@ -25,9 +25,10 @@ export function HomeTodayCard({
 
       <div className="mt-4 text-sm text-ink">次にやるべきこと: {nextTaskLabel}</div>
 
-      {weakTopic && <div className="mt-1 text-sm text-muted">苦手論点: {weakTopic}</div>}
-
-      <div className="mt-1 text-sm text-muted">今週の継続日数: {streakDays} 日</div>
+      <div className="mt-3 flex flex-col gap-0.5 border-t border-gray-100 pt-3 text-xs text-muted">
+        {weakTopic && <div>苦手論点: {weakTopic}</div>}
+        <div>今週の継続日数: {streakDays} 日</div>
+      </div>
 
       <Link
         href="/review"

@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { canPublishQuestion, filterPublishable } from "../../lib/rights/canPublishQuestion";
 import { originalSampleQuestions } from "../../data/seed/original-sample-questions";
-import type { Question } from "../../lib/questions/schema";
+import type { Question, RightsStatus, SupervisionStatus } from "../../lib/questions/schema";
 
 const baseQuestion: Question = {
   questionId: "q1",
@@ -55,6 +55,29 @@ describe("canPublishQuestion", () => {
     const decision = canPublishQuestion({ ...baseQuestion, reviewedBy: null, lastReviewedAt: null });
     expect(decision.canPublish).toBe(false);
   });
+});
+
+const ALL_RIGHTS_STATUSES: RightsStatus[] = [
+  "original_ai_generated",
+  "user_supervised",
+  "third_party_restricted",
+  "internal_reference_only",
+];
+const ALL_SUPERVISION_STATUSES: SupervisionStatus[] = ["unsupervised", "in_review", "supervised"];
+
+describe("canPublishQuestion — full rightsStatus x supervisionStatus matrix", () => {
+  const matrix = ALL_RIGHTS_STATUSES.flatMap((rightsStatus) =>
+    ALL_SUPERVISION_STATUSES.map((supervisionStatus) => ({ rightsStatus, supervisionStatus }))
+  );
+
+  it.each(matrix)(
+    "rightsStatus=$rightsStatus, supervisionStatus=$supervisionStatus",
+    ({ rightsStatus, supervisionStatus }) => {
+      const question: Question = { ...baseQuestion, rightsStatus, supervisionStatus };
+      const expected = rightsStatus !== "third_party_restricted" && rightsStatus !== "internal_reference_only" && supervisionStatus === "supervised";
+      expect(canPublishQuestion(question).canPublish).toBe(expected);
+    }
+  );
 });
 
 describe("filterPublishable", () => {
