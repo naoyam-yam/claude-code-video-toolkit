@@ -110,6 +110,8 @@ Xアプリの共有メニューにこのショートカットが出るように�
 
 | 症状 | 原因 | 対処 |
 |---|---|---|
-| Issue作成時に401/403エラー | PATの権限不足・期限切れ | Step1をやり直し、Issues: Read and writeが付いているか確認 |
+| `"message": "Requires authentication"` (401) | `Authorization` ヘッダの値に `Bearer `(スキーム+半角スペース)が付いていない。素のトークンだけだとGitHubは認証情報自体を認識できない | 値を `Bearer <トークン>` の1行にする(`Bearer`の綴り・スペース1個に注意) |
+| `"message": "Resource not accessible by personal access token"` (403) | トークンは認証できているが、Issuesの権限が `Read and write` になっていない(Read-only/No accessのまま) | Step1のトークン設定を見直すか、トークンをDeleteして作り直し、`Issues: Read and write` を確認してから再発行 |
+| その他401/403 | PATの期限切れ・リポジトリ選択ミス | Step1をやり直し、Repository accessに `claude-code-video-toolkit` が選ばれているか確認 |
 | Issueは作られるがTriggerが動かない | Trigger未設定 or label不一致 | Step3の設定、labelが `x-tip` 完全一致か確認 |
 | PRは作られるがwikiが更新されていない | tip_textが空・曖昧すぎる | Issue本文にツイート本文をそのまま貼る(要約だけだと精度が落ちる) |
