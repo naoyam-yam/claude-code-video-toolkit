@@ -1,0 +1,36 @@
+name: "X Tip 投稿"
+description: "Xでバズってた Claude Code の tips を投げ込む(自動でwiki更新+投稿文ドラフト生成のトリガーになります)"
+title: "[x-tip] "
+labels:
+  - x-tip
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Xで見つけた「Claude Codeはこれをやれ」系のtipsをここに貼ってください。
+        Issueを作成すると `x-tips-curator` スキルが起動し、`x-tips/WIKI.md` の更新と
+        `x-tips/QUEUE.md` への投稿ドラフト追加、`x-tips/SOURCES.md` への出典記録が
+        自動で行われ、結果がPRとしてこのIssueにリンクされます。
+  - type: input
+    id: source_url
+    attributes:
+      label: 元投稿のURL
+      description: XのポストURL(わかる範囲でOK。無ければ空欄のまま)
+      placeholder: "https://x.com/.../status/..."
+    validations:
+      required: false
+  - type: textarea
+    id: tip_text
+    attributes:
+      label: 投稿本文 / 内容
+      description: ツイート本文をそのまま貼るか、tipsの内容を説明してください
+      placeholder: "貼り付け、またはtipsの説明"
+    validations:
+      required: true
+  - type: textarea
+    id: note
+    attributes:
+      label: メモ(任意)
+      description: なぜ気になったか、どのカテゴリに入りそうか等、あれば
+    validations:
+      required: false

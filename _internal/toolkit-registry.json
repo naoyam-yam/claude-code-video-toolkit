@@ -93,6 +93,13 @@
       "note": "Skill teaches the JSON caption format; Claude is the magic-prompt expander. Tool: tools/ideogram4.py. Hosted paid API (commercial license, ~$0.03–0.09/img); not self-hosted. Needs IDEOGRAM_API_KEY.",
       "created": "2026-06-08",
       "updated": "2026-06-08"
+    },
+    "x-tips-curator": {
+      "path": ".claude/skills/x-tips-curator/",
+      "description": "Curate viral X (Twitter) Claude Code tips into x-tips/WIKI.md and a post draft queue — fact-checking, wiki write-up, source attribution",
+      "status": "beta",
+      "created": "2026-07-02",
+      "updated": "2026-07-02"
     }
   },
   "commands": {
@@ -193,6 +200,13 @@
       "status": "beta",
       "created": "2026-06-09",
       "updated": "2026-06-09"
+    },
+    "x-tips": {
+      "path": ".claude/commands/x-tips.md",
+      "description": "Curate a viral X (Twitter) Claude Code tip into the wiki + post queue",
+      "status": "beta",
+      "created": "2026-07-02",
+      "updated": "2026-07-02"
     }
   },
   "tools": {
